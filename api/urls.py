@@ -12,4 +12,5 @@ urlpatterns = [
     path('yangilik/<int:pk>/', YangilikUV.as_view()),
     path('rahbariyat/', RahbariyatCV.as_view()),
     path('rahbariyat/<int:pk>/', RahbariyatUV.as_view())
+
 ]

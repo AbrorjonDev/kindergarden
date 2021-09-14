@@ -116,7 +116,8 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 
@@ -136,6 +137,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+OLD_PASSWORD_FIELD_ENABLED = True
+LOGOUT_ON_PASSWORD_CHANGE = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -149,6 +152,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#EMAIL CONFIGURATION
+EMAIL = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 
 # django_heroku.settings(locals())
 # configure Djoser
@@ -161,15 +171,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #         'token_create': 'apps.accounts.serializers.CustomTokenCreateSerializer',
 #     },
 # }
-
-
-
-
-#EMAIL CONFIGURATION
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_USE_TLS = True
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "abrorjonaxmadov21@gmail.com"
-EMAIL_HOST_PASSWORD = "testing321"
-SITE_NAME = "KinderGarden"

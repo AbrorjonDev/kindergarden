@@ -4,4 +4,6 @@
 .idea/
 __pycache__
 __init__.py
+.env
+db.sqlite3
 

@@ -6,6 +6,9 @@ from api.serializers import PasswordResetSerializer
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 
+from dj_rest_auth.registration.views import APIView, ConfirmEmailView, AllowAny, MethodNotAllowed, status
+
+
 class TumanCV(ListCreateAPIView):
     queryset = Tuman.objects.all()
     serializer_class = TumanS
@@ -74,3 +77,18 @@ class PasswordResetConfirmAPIView(PasswordResetConfirmView):
         return Response(
             {'detail': _('Password has been reset with the new password.')},
         )
+
+
+class VerifyEmailView(APIView, ConfirmEmailView):
+    permission_classes = (AllowAny,)
+    allowed_methods = ('POST', 'OPTIONS', 'HEAD')
+    #
+    # def get_serializer(self, *args, **kwargs):
+    #     return VerifyTokenSerializer(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        path = request.path
+        key = path.split("/")[:-3]
+        confirmation = self.get_object()
+        confirmation.confirm(self.request)
+        return Response({'detail': _('ok')}, status=status.HTTP_200_OK)

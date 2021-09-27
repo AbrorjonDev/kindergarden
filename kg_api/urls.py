@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from api.views import VerifyEmailView
 from api.views import PasswordResetConfirmAPIView
+from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('api.urls')),
@@ -29,5 +33,10 @@ urlpatterns = [
     ),    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('dj-rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
 
-
+    path('docs/', include_docs_urls(title='Training Center Api')),
+    path('schemas/', get_schema_view(
+        title="EWS Schema",
+        description="API for all models",
+        version="1.0.0"
+      ), name="openapi-schema")
 ]

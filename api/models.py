@@ -67,3 +67,5 @@ class Xodim(models.Model):
     mutaxassislik = models.CharField(max_length=50)
     otm = models.CharField(max_length=50)
     about = models.CharField(max_length=50)
+
+

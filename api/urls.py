@@ -11,6 +11,8 @@ urlpatterns = [
     path('yangilik/', YangilikCV.as_view()),
     path('yangilik/<int:pk>/', YangilikUV.as_view()),
     path('rahbariyat/', RahbariyatCV.as_view()),
-    path('rahbariyat/<int:pk>/', RahbariyatUV.as_view())
+    path('rahbariyat/<int:pk>/', RahbariyatUV.as_view()),
+    path('xodim/', XodimCV.as_view()),
+    path('xodim/<int:pk>/', XodimUV.as_view())
 
 ]

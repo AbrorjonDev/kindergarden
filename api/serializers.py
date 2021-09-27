@@ -33,6 +33,12 @@ class RahbariyatS(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class XodimS(serializers.ModelSerializer):
+    class Meta:
+        model = Xodim
+        fields = '__all__'
+
+
 class PasswordResetSerializer(serializers.Serializer):
     new_password1 = serializers.CharField(max_length=128)
     new_password2 = serializers.CharField(max_length=128)

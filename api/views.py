@@ -58,6 +58,15 @@ class RahbariyatUV(UpdateAPIView):
     queryset = Rahbariyat.objects.all()
     serializer_class = RahbariyatS
 
+class XodimCV(ListCreateAPIView):
+    queryset = Xodim.objects.all()
+    serializer_class = XodimS
+
+
+class XodimUV(UpdateAPIView):
+    queryset = Xodim.objects.all()
+    serializer_class = XodimS
+
 class PasswordResetConfirmAPIView(PasswordResetConfirmView):
     serializer_class = PasswordResetSerializer
 

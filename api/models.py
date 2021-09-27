@@ -56,3 +56,14 @@ class Rahbariyat(models.Model):
     mutaxassislik = models.CharField(max_length=50)
     otm = models.CharField(max_length=50)
     about = models.CharField(max_length=50)
+
+
+class Xodim(models.Model):
+    rasm = models.ImageField()
+    kg = models.ForeignKey(KG, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=100)
+    lavozim = models.CharField(max_length=50)
+    date = models.DateTimeField()
+    mutaxassislik = models.CharField(max_length=50)
+    otm = models.CharField(max_length=50)
+    about = models.CharField(max_length=50)

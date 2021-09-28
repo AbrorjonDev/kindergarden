@@ -67,6 +67,11 @@ class XodimUV(UpdateAPIView):
     queryset = Xodim.objects.all()
     serializer_class = XodimS
 
+
+class PostCV(ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostS
+
 class PasswordResetConfirmAPIView(PasswordResetConfirmView):
     serializer_class = PasswordResetSerializer
 

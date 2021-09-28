@@ -13,6 +13,6 @@ urlpatterns = [
     path('rahbariyat/', RahbariyatCV.as_view()),
     path('rahbariyat/<int:pk>/', RahbariyatUV.as_view()),
     path('xodim/', XodimCV.as_view()),
-    path('xodim/<int:pk>/', XodimUV.as_view())
-
+    path('xodim/<int:pk>/', XodimUV.as_view()),
+    path('post/',PostCV.as_view())
 ]

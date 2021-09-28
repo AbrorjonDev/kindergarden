@@ -68,4 +68,7 @@ class Xodim(models.Model):
     otm = models.CharField(max_length=50)
     about = models.CharField(max_length=50)
 
-
+class Post(models.Model):
+    rasm = models.ImageField()
+    kg = models.ForeignKey(KG, on_delete=models.CASCADE)
+    text = models.TextField()

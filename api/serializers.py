@@ -38,6 +38,11 @@ class XodimS(serializers.ModelSerializer):
         model = Xodim
         fields = '__all__'
 
+class PostS(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
+
 
 class PasswordResetSerializer(serializers.Serializer):
     new_password1 = serializers.CharField(max_length=128)

@@ -72,6 +72,10 @@ class PostCV(ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostS
 
+class PostUV(RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostS
+
 class PasswordResetConfirmAPIView(PasswordResetConfirmView):
     serializer_class = PasswordResetSerializer
 

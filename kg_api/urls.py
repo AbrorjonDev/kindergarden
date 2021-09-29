@@ -14,14 +14,30 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include, re_path, reverse
 from api.views import VerifyEmailView
 from api.views import PasswordResetConfirmAPIView
 from rest_framework.schemas import get_schema_view
 from rest_framework.documentation import include_docs_urls
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def api_root(request, format=None):
+    return Response({
+        "tuman": "https://bogcha.herokuapp.com/tuman/",
+        "rahbariyat": "https://bogcha.herokuapp.com/rahbariyat/",
+        "kindergarden": "https://bogcha.herokuapp.com/kg/",
+        "tadbirlar": "https://bogcha.herokuapp.com/tadbirlar/",
+        "yangilik": "https://bogcha.herokuapp.com/yangilik/",
+        "xodim": "https://bogcha.herokuapp.com/xodim/",
+        "post": "https://bogcha.herokuapp.com/post/",
+    })
 urlpatterns = [
+    path('', api_root, name="api-root"),
     path('admin/', admin.site.urls),
     path('', include('api.urls')),
     path('dj-rest-auth/password/reset/confirm/<uidb64>/<token>/', PasswordResetConfirmAPIView.as_view(),

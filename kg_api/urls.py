@@ -31,13 +31,14 @@ from django.conf.urls.static import static
 @permission_classes((AllowAny,))
 def api_root(request, format=None):
     return Response({
-        "tuman": "https://bogcha.herokuapp.com/tuman/",
         "rahbariyat": "https://bogcha.herokuapp.com/rahbariyat/",
         "kindergarden": "https://bogcha.herokuapp.com/kg/",
         "tadbirlar": "https://bogcha.herokuapp.com/tadbirlar/",
         "yangilik": "https://bogcha.herokuapp.com/yangilik/",
         "xodim": "https://bogcha.herokuapp.com/xodim/",
         "post": "https://bogcha.herokuapp.com/post/",
+        "all-data": "https://bogcha.herokuapp.com/all-data/",
+        "media-upload": "https://bogcha.herokuapp.com/media-upload/",
     })
 urlpatterns = [
     path('', api_root, name="api-root"),

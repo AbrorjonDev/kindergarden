@@ -3,10 +3,10 @@ from .models import *
 from rest_framework.response import Response
 
 
-class TumanS(serializers.ModelSerializer):
-    class Meta:
-        model = Tuman
-        fields = '__all__'
+# class TumanS(serializers.ModelSerializer):
+#     class Meta:
+#         model = Tuman
+#         fields = '__all__'
 
 
 class KGS(serializers.ModelSerializer):
@@ -43,6 +43,16 @@ class PostS(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
 
+class MenuSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Menu
+        fields = '__all__'
+
+class ImageVideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image_Video
+        fields = '__all__'
+
 
 class PasswordResetSerializer(serializers.Serializer):
     new_password1 = serializers.CharField(max_length=128)
@@ -50,3 +60,7 @@ class PasswordResetSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return Response(status=201)
+
+
+class IDS(serializers.Serializer):
+    id = serializers.IntegerField()

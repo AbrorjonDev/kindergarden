@@ -6,6 +6,6 @@ __pycache__
 __init__.py
 .env
 
-migrations/
+
 packages/
 

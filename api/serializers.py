@@ -53,6 +53,29 @@ class ImageVideoSerializer(serializers.ModelSerializer):
         model = Image_Video
         fields = '__all__'
 
+class OshxonaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Oshxona
+        fields = '__all__'
+
+class RegisterS(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'password')
+
+    def create(self, validated_data):
+        username = self.validated_data.get('username')
+        first_name = self.validated_data.get('first_name')
+        last_name = self.validated_data.get('last_name')
+        email = self.validated_data.get('email')
+        password = self.validated_data.get('password')
+
+        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email)
+        user.set_password(password)
+        user.save()
+        return user
 
 class PasswordResetSerializer(serializers.Serializer):
     new_password1 = serializers.CharField(max_length=128)
@@ -62,5 +85,9 @@ class PasswordResetSerializer(serializers.Serializer):
         return Response(status=201)
 
 
-class IDS(serializers.Serializer):
-    id = serializers.IntegerField()
+class EmailS(serializers.Serializer):
+    key = serializers.CharField(max_length=150)
+
+class VerificationCodeS(serializers.Serializer):
+    email = serializers.EmailField()
+    code = serializers.CharField(max_length=6)

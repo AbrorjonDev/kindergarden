@@ -5,6 +5,10 @@ from rest_framework.response import Response
 from api.serializers import PasswordResetSerializer
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
+from rest_framework.authtoken.models import Token
+from django.shortcuts import get_object_or_404
 
 from dj_rest_auth.registration.views import APIView, ConfirmEmailView, AllowAny, MethodNotAllowed, status
 
@@ -25,40 +29,55 @@ class KGCV(ListCreateAPIView):
 
 class AllDataView(APIView):
     queryset = KG.objects.all()
-    serializer_class = IDS
+    serializer_class = EmailS
 
-    def get_object(self, pk):
-        return KG.objects.get(pk=pk)
+    def get_object(self, key):
+        try:
+            email = Token.objects.get(key=key).user.email
+            return get_object_or_404(KG, email=email)
+        except Exception as e:
+            raise e
 
     def post(self, request, format=None):
-        pk = request.data['id']
-        object = self.get_object(pk)
-        rahbariyat = Rahbariyat.objects.filter(kg=object)
-        xodim = Xodim.objects.filter(kg=object)
-        tadbir = Tadbir.objects.filter(kg=object)
-        yangilik = Yangilik.objects.filter(kg=object)
-        post = Post.objects.filter(kg=object)
-        menu = Menu.objects.filter(kg=object)
-        media = Image_Video.objects.filter(kg=object)
-        serializer = {
-            'rahbariyat': RahbariyatS(rahbariyat, many=True).data,
-            'xodim': XodimS(xodim, many=True).data,
-            'tadbir': TadbirS(tadbir, many=True).data,
-            'yangilik': YangilikS(yangilik, many=True).data,
-            'post': PostS(post, many=True).data,
-            'menu': MenuSerializer(menu, many=True).data,
-            'media': ImageVideoSerializer(media, many=True).data,
-        }
-        serializer["id"] = object.id
-        serializer["name"] = object.name
-        serializer["email"] = object.email
-        serializer["tuman"] = object.tuman
-        serializer["number"] = object.number
-        serializer["address"] = object.address
-        serializer["tel"] = object.tel
-        serializer["telegram"] = object.telegram
-        serializer["logo"] = object.logo.url
-        return Response(serializer, status=200)
+        serializer = EmailS(data=request.data)
+        if serializer.is_valid():
+            try:
+                token = serializer.validated_data.get('key')
+                object = self.get_object(token)
+                rahbariyat = Rahbariyat.objects.filter(kg=object)
+                xodim = Xodim.objects.filter(kg=object)
+                tadbir = Tadbir.objects.filter(kg=object)
+                yangilik = Yangilik.objects.filter(kg=object)
+                post = Post.objects.filter(kg=object)
+                oshxona = Oshxona.objects.filter(kg=object)
+                menu = []
+                for o in oshxona:
+                    menu += Menu.objects.filter(oshxona=o)
+                media = Image_Video.objects.filter(kg=object)
+                serializer = {
+                    'rahbariyat': RahbariyatS(rahbariyat, many=True).data,
+                    'xodim': XodimS(xodim, many=True).data,
+                    'tadbir': TadbirS(tadbir, many=True).data,
+                    'yangilik': YangilikS(yangilik, many=True).data,
+                    'post': PostS(post, many=True).data,
+                    'oshxona': OshxonaSerializer(oshxona, many=True).data,
+                    'menu': MenuSerializer(menu, many=True).data,
+                    'media': ImageVideoSerializer(media, many=True).data,
+                }
+                serializer["id"] = object.id
+                serializer["name"] = object.name
+                serializer["email"] = object.email
+                serializer["viloyat"] = object.viloyat
+                serializer["tuman"] = object.tuman
+                serializer["number"] = object.number
+                serializer["address"] = object.address
+                serializer["phone"] = object.phone
+                serializer["telegram"] = object.telegram
+                serializer["logo"] = object.logo.url
+                return Response(serializer, status=200)
+            except Exception as e:
+                return Response({'detail': f'{e}',}, status=200)
+        return Response(serializer.errors)
 
 
 
@@ -87,6 +106,14 @@ class YangilikUV(RetrieveUpdateDestroyAPIView):
     queryset = Yangilik.objects.all()
     serializer_class = YangilikS
 
+class KitchenCView(ListCreateAPIView):
+    queryset = Oshxona.objects.all()
+    serializer_class = OshxonaSerializer
+
+
+class KitchenUView(RetrieveUpdateDestroyAPIView):
+    queryset = Oshxona.objects.all()
+    serializer_class = OshxonaSerializer
 
 class RahbariyatCV(ListCreateAPIView):
     queryset = Rahbariyat.objects.all()
@@ -138,13 +165,21 @@ class MenuView(APIView):
             return Response(serializer.data, status=200)
         return Response(serializer.errors)
 
-    # def put(self, request, pk):
-    #     self.get_object()
-    #     serializer = self.serializer_class(data=request.data)
-    #     if serializer.is_valid(raise_exception=True):
-    #         Menu
-    #         serializer.save()
-    #         return Response()
+class MenuByKGView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            id = kwargs["pk"]
+            oshxonalar = Oshxona.objects.filter(kg__id=id)
+            menular = []
+            for oshxona in oshxonalar:
+                menular += Menu.objects.filter(oshxona=oshxona)
+            data = {
+                'oshxonalar': OshxonaSerializer(oshxonalar, many=True).data,
+                'menular': MenuSerializer(menular, many=True).data,
+            }
+            return Response(data, status=200)
+        except Exception as e:
+            raise e
 class MenuUV(RetrieveUpdateDestroyAPIView):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
@@ -183,3 +218,57 @@ class VerifyEmailView(APIView, ConfirmEmailView):
         confirmation = self.get_object()
         confirmation.confirm(self.request)
         return Response({'detail': _('ok')}, status=status.HTTP_200_OK)
+
+from dj_rest_auth.registration.serializers import RegisterSerializer as RS
+
+
+class RegisterView(APIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterS
+
+    def post(self, request, *args, **kwargs):
+        serializer = RegisterS(data=request.data)
+        if serializer.is_valid():
+            email = serializer.validated_data.get("email")
+            serializer.save()
+            object = VerifyAccountCode.objects.create(email=email)
+            object.save()
+            subject = 'Tasdiqlash kodi'
+            message = f'''
+                Assalomu alaykum, Siz bizning saytda ro\'yxatdan o'tdingiz.
+
+                Tasdiqlash kodi: {object.code} .
+
+                Bu kodni hech kimga bermang.
+
+                Xurmat bilan ittower.uz jamoasi.
+            '''
+            send_mail(subject, message, settings.EMAIL_HOST_USER, [email, ] , fail_silently=False)
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors)
+
+class VerifyEmail(APIView):
+    serializer_class = VerificationCodeS
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            code = serializer.validated_data.get('code')
+            email = serializer.validated_data.get('email')
+
+            try:
+                object = VerifyAccountCode.objects.get(email=email, code=code)
+                if object.status == True:
+                    message = 'Bu koddan qayta foydalanib bo\'lmaydi.'
+                    return Response({'detail': message, }, status=400)
+                else:
+                    object.status = True
+                    object.save()
+                    kg = KG.objects.create(email=object.email)
+                    kg.save()
+                return Response({'detail': 'Akkount tasdiqdan o\'tdi.', }, status=201)
+            except Exception as e:
+                raise e
+        return Response(serializer.errors, status=400)
+
+

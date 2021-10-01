@@ -17,10 +17,14 @@ urlpatterns = [
     path('post/',PostCV.as_view(), name="post-api"),
     path('post/<int:pk>/', PostUV.as_view(), name="post-update-api"),
     path('all-data/', AllDataView.as_view(), name="all-data"),
+    path('kitchen/', KitchenCView.as_view(), name="oshxona-api"),
+    path('kitchen/<int:pk>/', KitchenUView.as_view(), name="oshxona-update-api"),
     path('menu/', MenuView.as_view(), name="menu"),
     path('menu/<int:pk>/', MenuUV.as_view(), name="menu"),
     path('media-upload/',MediaCV.as_view(), name="media-upload-api"),
     path('media-upload/<int:pk>/', MediaUV.as_view(), name="media-upload-update-api"),
-
+    path('menu-by-kg/<int:pk>/', MenuByKGView.as_view()),
+    path('register/', RegisterView.as_view(), name="registration-api"),
+    path('verify-email/', VerifyEmail.as_view(), name="verify-email-api"),
 
 ]

@@ -37,6 +37,8 @@ def api_root(request, format=None):
         "yangilik": "https://bogcha.herokuapp.com/yangilik/",
         "xodim": "https://bogcha.herokuapp.com/xodim/",
         "post": "https://bogcha.herokuapp.com/post/",
+        "kitchen": "https://bogcha.herokuapp.com/kitchen/",
+        "menu": "https://bogcha.herokuapp.com/menu/",
         "all-data": "https://bogcha.herokuapp.com/all-data/",
         "media-upload": "https://bogcha.herokuapp.com/media-upload/",
     })
@@ -53,7 +55,7 @@ urlpatterns = [
     ),    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('dj-rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
 
-    path('docs/', include_docs_urls(title='Training Center Api')),
+    path('docs/', include_docs_urls(title='Bog\'cha Api')),
     path('schemas/', get_schema_view(
         title="EWS Schema",
         description="API for all models",

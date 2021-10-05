@@ -54,7 +54,7 @@ urlpatterns = [
         name='account_confirm_email',
     ),    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('dj-rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
-    path('rest-auth/', include('rest_auth.urls')),
+    # path('rest-auth/', include('rest_auth.urls')),
     path('docs/', include_docs_urls(title='Bog\'cha Api')),
     path('schemas/', get_schema_view(
         title="EWS Schema",

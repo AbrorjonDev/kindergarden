@@ -77,7 +77,28 @@ class RegisterS(serializers.ModelSerializer):
         user.save()
         return user
 
-class PasswordResetSerializer(serializers.Serializer):
+from dj_rest_auth.serializers import PasswordResetSerializer as PasswordSerializer
+from django.conf import settings
+class CustomPasswordResetSerializer(PasswordSerializer):
+    def get_email_options(self):
+        return {
+            # 'email_template_name': 'registration/password_  reset_email.txt',
+            'html_email_template_name': 'password_reset_email.html',
+        }
+    def save(self):
+        request = self.context.get('request')
+        opts = {
+            'use_https': request.is_secure(),
+            'from_email': getattr(settings, 'EMAIL_HOST_USER'),
+            'request': request,
+            ###### USE YOUR TEXT FILE ######
+            'email_template_name': 'password_reset_email.html',
+
+
+        }
+        self.reset_form.save(**opts)
+from dj_rest_auth.serializers import PasswordResetConfirmSerializer
+class PasswordResetSerializer(PasswordResetConfirmSerializer):      #serializers.Serializer
     new_password1 = serializers.CharField(max_length=128)
     new_password2 = serializers.CharField(max_length=128)
 

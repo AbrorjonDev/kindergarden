@@ -26,5 +26,6 @@ urlpatterns = [
     path('menu-by-kg/<int:pk>/', MenuByKGView.as_view()),
     path('register/', RegisterView.as_view(), name="registration-api"),
     path('verify-email/', VerifyEmail.as_view(), name="verify-email-api"),
+    path('password-reset/', CustomPasswordResetView.as_view(), name="password-reset-api"),
 
 ]

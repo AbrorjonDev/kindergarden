@@ -33,6 +33,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
 
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = 'bogcha.herokuapp.com'
+
+CORS_REPLACE_HTTPS_REFERER = True
+
+CSRF_COOKIE_DOMAIN = 'bogcha.herokuapp.com'
 
 # Application definition
 
@@ -53,6 +64,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
+    'rest_auth',
 ]
 SITE_ID=1
 
@@ -72,7 +84,7 @@ ROOT_URLCONF = 'kg_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,21 +137,21 @@ REST_FRAMEWORK = {
     )
 
 }
+REST_AUTH_SERIALIZERS = {
+    'PASSWORD_RESET_SERIALIZER': 'api.serializers.CustomPasswordResetSerializer',
+}
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'uz'
-
 TIME_ZONE = 'Asia/Tashkent'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
+PASSWORD_RESET_SERIALIZER = 'api.serializers.CustomPasswordResetSerializer'
 OLD_PASSWORD_FIELD_ENABLED = True
 LOGOUT_ON_PASSWORD_CHANGE = False
 

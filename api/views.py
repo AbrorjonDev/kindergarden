@@ -12,6 +12,10 @@ from django.shortcuts import get_object_or_404
 
 from dj_rest_auth.registration.views import APIView, ConfirmEmailView, AllowAny, MethodNotAllowed, status
 
+from dj_rest_auth.views import PasswordResetView
+
+class CustomPasswordResetView(PasswordResetView):
+    pass
 #
 # class TumanCV(ListCreateAPIView):
 #     queryset = Tuman.objects.all()
@@ -269,6 +273,6 @@ class VerifyEmail(APIView):
                 return Response({'detail': 'Akkount tasdiqdan o\'tdi.', }, status=201)
             except Exception as e:
                 raise e
-        return Response(serializer.errors, status=400)
+        return Response(serializer  .errors, status=400)
 
 

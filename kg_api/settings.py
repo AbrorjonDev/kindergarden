@@ -33,17 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
 
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_ALLOW_CREDENTIALS = True
-
-CSRF_TRUSTED_ORIGINS = 'bogcha.herokuapp.com'
-
-CORS_REPLACE_HTTPS_REFERER = True
-
-CSRF_COOKIE_DOMAIN = 'bogcha.herokuapp.com'
 
 # Application definition
 
@@ -61,6 +50,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
@@ -70,6 +60,7 @@ SITE_ID=1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,6 +69,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = 'bogcha.herokuapp.com'
+
+CORS_REPLACE_HTTPS_REFERER = True
+
+CSRF_COOKIE_DOMAIN = 'bogcha.herokuapp.com'
 
 ROOT_URLCONF = 'kg_api.urls'
 

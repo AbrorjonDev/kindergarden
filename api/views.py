@@ -124,16 +124,17 @@ class RahbariyatCV(ListCreateAPIView):
     serializer_class = RahbariyatS
 
 
-class RahbariyatUV(UpdateAPIView):
+class RahbariyatUV(RetrieveUpdateDestroyAPIView):
     queryset = Rahbariyat.objects.all()
     serializer_class = RahbariyatS
+    # http_method_names = ['GET', 'PUT', 'PATCH', 'DELETE']
 
 class XodimCV(ListCreateAPIView):
     queryset = Xodim.objects.all()
     serializer_class = XodimS
 
 
-class XodimUV(UpdateAPIView):
+class XodimUV(RetrieveUpdateDestroyAPIView):
     queryset = Xodim.objects.all()
     serializer_class = XodimS
 

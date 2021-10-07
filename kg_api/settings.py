@@ -31,7 +31,7 @@ SECRET_KEY = 'django secret key'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ["*"] #'.herokuapp.com', '127.0.0.1'
 
 
 # Application definition
@@ -72,9 +72,34 @@ MIDDLEWARE = [
 
 CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
 
 CSRF_TRUSTED_ORIGINS = 'bogcha.herokuapp.com'
 
@@ -142,6 +167,7 @@ REST_FRAMEWORK = {
 }
 REST_AUTH_SERIALIZERS = {
     'PASSWORD_RESET_SERIALIZER': 'api.serializers.CustomPasswordResetSerializer',
+    'PASSWORD_RESET_CONFIRM_SERIALIZER': 'api.serializers.PasswordResetSerializer',
 }
 
 
@@ -154,6 +180,17 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 PASSWORD_RESET_SERIALIZER = 'api.serializers.CustomPasswordResetSerializer'
 OLD_PASSWORD_FIELD_ENABLED = True
 LOGOUT_ON_PASSWORD_CHANGE = False
@@ -176,9 +213,9 @@ EMAIL = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'abrorjonaxmadov21@gmail.com' #os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = 'testing321' #os.environ.get('EMAIL_PASS')
-
+EMAIL_HOST_USER = 'abrorjonaxmadov21@gmail.com'
+EMAIL_HOST_PASSWORD = 'testing321'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 # django_heroku.settings(locals())
 # configure Djoser
 # DJOSER = {

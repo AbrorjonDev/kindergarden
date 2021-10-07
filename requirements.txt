@@ -1,6 +1,5 @@
 asgiref==3.2.10
 astroid==2.4.2
-attrs==21.2.0
 certifi==2021.5.30
 cffi==1.14.6
 charset-normalizer==2.0.4

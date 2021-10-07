@@ -84,6 +84,59 @@ class AllDataView(APIView):
         return Response(serializer.errors)
 
 
+class KGINFOView(APIView):
+    queryset = KG.objects.all()
+    serializer_class = KGInfoS
+
+    def get_object(self, pk):
+        try:
+            return KG.objects.get(id=pk)
+        except Exception as e:
+            raise e
+
+    def get(self, request, pk,  format=None):
+        # serializer = KGInfoS(data=request.data)
+        # if serializer.is_valid():
+        #     try:
+        # id = serializer.validated_data.get('id')
+        id = request.path.split("/")[-1]
+        try:
+            object = self.get_object(pk)
+            rahbariyat = Rahbariyat.objects.filter(kg=object)
+            xodim = Xodim.objects.filter(kg=object)
+            tadbir = Tadbir.objects.filter(kg=object)
+            yangilik = Yangilik.objects.filter(kg=object)
+            post = Post.objects.filter(kg=object)
+            oshxona = Oshxona.objects.filter(kg=object)
+            menu = []
+            for o in oshxona:
+                menu += Menu.objects.filter(oshxona=o)
+            media = Image_Video.objects.filter(kg=object)
+            serializer = {
+                'rahbariyat': RahbariyatS(rahbariyat, many=True).data,
+                'xodim': XodimS(xodim, many=True).data,
+                'tadbir': TadbirS(tadbir, many=True).data,
+                'yangilik': YangilikS(yangilik, many=True).data,
+                'post': PostS(post, many=True).data,
+                'oshxona': OshxonaSerializer(oshxona, many=True).data,
+                'menu': MenuSerializer(menu, many=True).data,
+                'media': ImageVideoSerializer(media, many=True).data,
+            }
+            serializer["id"] = object.id
+            serializer["name"] = object.name
+            serializer["email"] = object.email
+            serializer["viloyat"] = object.viloyat
+            serializer["tuman"] = object.tuman
+            serializer["number"] = object.number
+            serializer["address"] = object.address
+            serializer["phone"] = object.phone
+            serializer["telegram"] = object.telegram
+            serializer["logo"] = object.logo.url
+            return Response(serializer, status=200)
+        except Exception as e:
+            return Response({'detail': f'{e}',}, status=200)
+        return Response(serializer.errors)
+
 
 
 class KGUV(RetrieveUpdateDestroyAPIView):

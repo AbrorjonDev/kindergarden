@@ -15,6 +15,10 @@ class KGS(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class KGInfoS(serializers.Serializer):
+    id = serializers.IntegerField()
+
+
 class TadbirS(serializers.ModelSerializer):
     class Meta:
         model = Tadbir

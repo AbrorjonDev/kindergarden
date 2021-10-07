@@ -6,6 +6,7 @@ urlpatterns = [
     # path('tuman/<int:pk>/', TumanUV.as_view(), name="tuman-update-api"),
     path('kg/', KGCV.as_view(), name="kindergarden-api"),
     path('kg/<int:pk>/', KGUV.as_view(), name="kindergarden-update-api"),
+    path('kg-info/<int:pk>/', KGINFOView.as_view(), name="kindergarden-info"),
     path('tadbirlar/', TadbirCV.as_view(), name="tadbir-api"),
     path('tadbirlar/<int:pk>/', TadbirUV.as_view(), name="tadbir-update-api"),
     path('yangilik/', YangilikCV.as_view(), name="yangilik-api"),

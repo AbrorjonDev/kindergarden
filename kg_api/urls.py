@@ -33,6 +33,7 @@ def api_root(request, format=None):
     return Response({
         "rahbariyat": "https://bogcha.herokuapp.com/rahbariyat/",
         "kindergarden": "https://bogcha.herokuapp.com/kg/",
+        "kg-info": "https://bogcha.herokuapp.com/kg-info/4/",
         "tadbirlar": "https://bogcha.herokuapp.com/tadbirlar/",
         "yangilik": "https://bogcha.herokuapp.com/yangilik/",
         "xodim": "https://bogcha.herokuapp.com/xodim/",

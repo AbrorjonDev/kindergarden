@@ -78,6 +78,13 @@ class AllDataView(APIView):
                 serializer["phone"] = object.phone
                 serializer["telegram"] = object.telegram
                 serializer["logo"] = object.logo.url
+                serializer["instagram"] = object.instagram
+                serializer["facebook"] = object.facebook
+                serializer["why_us"] = object.why_us
+                serializer["our_history"] = object.our_history
+                serializer["program1"] = object.program1
+                serializer["program2"] = object.program2
+                serializer["program3"] = object.program3
                 return Response(serializer, status=200)
             except Exception as e:
                 return Response({'detail': f'{e}',}, status=200)
@@ -131,6 +138,14 @@ class KGINFOView(APIView):
             serializer["address"] = object.address
             serializer["phone"] = object.phone
             serializer["telegram"] = object.telegram
+            serializer["instagram"] = object.instagram
+            serializer["facebook"] = object.facebook
+            serializer["why_us"] = object.why_us
+            serializer["our_history"] = object.our_history
+            serializer["program1"] = object.program1
+            serializer["program2"] = object.program2
+            serializer["program3"] = object.program3
+
             serializer["logo"] = object.logo.url
             return Response(serializer, status=200)
         except Exception as e:
@@ -242,12 +257,16 @@ class MenuUV(RetrieveUpdateDestroyAPIView):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
 
+
+from django.utils.http import urlsafe_base64_decode as uid_decoder
+
 class PasswordResetConfirmAPIView(PasswordResetConfirmView):
     serializer_class = PasswordResetSerializer
 
     def post(self, request, *args, **kwargs):
         path = request.path
         uid = path.split('/')[-3]
+        uid = force_str(uid_decoder(uid))
         user = User.objects.get(pk=uid)
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():

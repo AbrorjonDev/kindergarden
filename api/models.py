@@ -43,9 +43,16 @@ class KG(models.Model):
     number = models.CharField(max_length=20)
     address = models.CharField(max_length=500)
     phone = models.CharField(max_length=50)
-    telegram = models.CharField(max_length=50)
+    telegram = models.URLField()
+    instagram = models.URLField(blank=True, null=True)
+    facebook = models.URLField(blank=True, null=True)
     email = models.EmailField()
     logo = models.ImageField()
+    our_history = models.TextField(blank=True, null=True)
+    why_us = models.TextField(blank=True, null=True)
+    program1 = models.TextField(blank=True, null=True)
+    program2 = models.TextField(blank=True, null=True)
+    program3 = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -88,6 +95,7 @@ class Image_Video(models.Model):
         return self.kg.name
 
 
+
 class Rahbariyat(models.Model):
     image = models.ImageField()
     kg = models.ForeignKey(KG, on_delete=models.CASCADE)
@@ -117,6 +125,7 @@ class Xodim(models.Model):
     phone = models.CharField(max_length=60)
     email = models.EmailField(null=True, blank=True)
     telegram = models.URLField(null=True, blank=True)
+
     def __str__(self):
         return self.full_name
 

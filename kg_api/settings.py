@@ -124,6 +124,7 @@ TEMPLATES = [
         },
     },
 ]
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
 
 WSGI_APPLICATION = 'kg_api.wsgi.application'
 
@@ -162,14 +163,18 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DATE_INPUT_FORMATS': ['%d-%m-%Y'],
+    'DATE_FORMAT': '%d-%m-%Y',
 
 }
 REST_AUTH_SERIALIZERS = {
     'PASSWORD_RESET_SERIALIZER': 'api.serializers.CustomPasswordResetSerializer',
     'PASSWORD_RESET_CONFIRM_SERIALIZER': 'api.serializers.PasswordResetSerializer',
 }
-
+DATE_INPUT_FORMATS = [
+    ("%d-%m-%Y"),
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -209,13 +214,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #EMAIL CONFIGURATION
-EMAIL = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'abrorjonaxmadov21@gmail.com'
 EMAIL_HOST_PASSWORD = 'testing321'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+EMAIL = 'django.core.mail.backends.console.EmailBackend'
+
+
+
+
 # django_heroku.settings(locals())
 # configure Djoser
 # DJOSER = {

@@ -20,6 +20,7 @@ class KGInfoS(serializers.Serializer):
 
 
 class TadbirS(serializers.ModelSerializer):
+    date = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
     class Meta:
         model = Tadbir
         fields = '__all__'
@@ -32,12 +33,14 @@ class YangilikS(serializers.ModelSerializer):
     
 
 class RahbariyatS(serializers.ModelSerializer):
+    date = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
     class Meta:
         model = Rahbariyat
         fields = '__all__'
 
 
 class XodimS(serializers.ModelSerializer):
+    date = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
     class Meta:
         model = Xodim
         fields = '__all__'
@@ -120,6 +123,7 @@ class PasswordResetSerializer(serializers.Serializer):      #serializers.Seriali
         else:
             from django.contrib.auth.tokens import default_token_generator
             from django.utils.http import urlsafe_base64_decode as uid_decoder
+            uid = force_str(uid_decoder(attrs['uid']))
 
         # Decode the uidb64 (allauth use base36) to uid to get User object
         try:

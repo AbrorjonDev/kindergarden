@@ -52,7 +52,7 @@ class AllDataView(APIView):
                 xodim = Xodim.objects.filter(kg=object)
                 tadbir = Tadbir.objects.filter(kg=object)
                 yangilik = Yangilik.objects.filter(kg=object)
-                post = Post.objects.filter(kg=object)
+                # post = Post.objects.filter(kg=object)
                 oshxona = Oshxona.objects.filter(kg=object)
                 menu = []
                 for o in oshxona:
@@ -63,7 +63,7 @@ class AllDataView(APIView):
                     'xodim': XodimS(xodim, many=True).data,
                     'tadbir': TadbirS(tadbir, many=True).data,
                     'yangilik': YangilikS(yangilik, many=True).data,
-                    'post': PostS(post, many=True).data,
+                    # 'post': PostS(post, many=True).data,
                     'oshxona': OshxonaSerializer(oshxona, many=True).data,
                     'menu': MenuSerializer(menu, many=True).data,
                     'media': ImageVideoSerializer(media, many=True).data,
@@ -123,7 +123,7 @@ class KGINFOView(APIView):
             xodim = Xodim.objects.filter(kg=object)
             tadbir = Tadbir.objects.filter(kg=object)
             yangilik = Yangilik.objects.filter(kg=object)
-            post = Post.objects.filter(kg=object)
+            # post = Post.objects.filter(kg=object)
             oshxona = Oshxona.objects.filter(kg=object)
             menu = []
             for o in oshxona:
@@ -134,7 +134,7 @@ class KGINFOView(APIView):
                 'xodim': XodimS(xodim, many=True).data,
                 'tadbir': TadbirS(tadbir, many=True).data,
                 'yangilik': YangilikS(yangilik, many=True).data,
-                'post': PostS(post, many=True).data,
+                # 'post': PostS(post, many=True).data,
                 'oshxona': OshxonaSerializer(oshxona, many=True).data,
                 'menu': MenuSerializer(menu, many=True).data,
                 'media': ImageVideoSerializer(media, many=True).data,

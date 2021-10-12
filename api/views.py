@@ -77,7 +77,8 @@ class AllDataView(APIView):
                 serializer["address"] = object.address
                 serializer["phone"] = object.phone
                 serializer["telegram"] = object.telegram
-                serializer["logo"] = object.logo.url
+                if object.logo:
+                    serializer["logo"] = object.logo.url
                 serializer["instagram"] = object.instagram
                 serializer["facebook"] = object.facebook
                 serializer["why_us"] = object.why_us
@@ -85,6 +86,15 @@ class AllDataView(APIView):
                 serializer["program1"] = object.program1
                 serializer["program2"] = object.program2
                 serializer["program3"] = object.program3
+                serializer["post_image1"] = object.post_image1
+                serializer["post_image2"] = object.post_image2
+                serializer["post_image3"] = object.post_image3
+                serializer["post_image4"] = object.post_image4
+                serializer["post_text1"] = object.post_text1
+                serializer["post_text2"] = object.post_text2
+                serializer["post_text3"] = object.post_text3
+                serializer["post_text4"] = object.post_text4
+
                 return Response(serializer, status=200)
             except Exception as e:
                 return Response({'detail': f'{e}',}, status=200)
@@ -145,8 +155,16 @@ class KGINFOView(APIView):
             serializer["program1"] = object.program1
             serializer["program2"] = object.program2
             serializer["program3"] = object.program3
-
-            serializer["logo"] = object.logo.url
+            serializer["post_image1"] = object.post_image1
+            serializer["post_image2"] = object.post_image2
+            serializer["post_image3"] = object.post_image3
+            serializer["post_image4"] = object.post_image4
+            serializer["post_text1"] = object.post_text1
+            serializer["post_text2"] = object.post_text2
+            serializer["post_text3"] = object.post_text3
+            serializer["post_text4"] = object.post_text4
+            if object.logo:
+                serializer["logo"] = object.logo.url
             return Response(serializer, status=200)
         except Exception as e:
             return Response({'detail': f'{e}',}, status=200)
@@ -206,14 +224,14 @@ class XodimUV(RetrieveUpdateDestroyAPIView):
     queryset = Xodim.objects.all()
     serializer_class = XodimS
 
-
-class PostCV(ListCreateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostS
-
-class PostUV(RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostS
+#
+# class PostCV(ListCreateAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostS
+#
+# class PostUV(RetrieveUpdateDestroyAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostS
 
 class MediaCV(ListCreateAPIView):
     queryset = Image_Video.objects.all()

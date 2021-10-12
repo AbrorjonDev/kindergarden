@@ -27,8 +27,6 @@ class MenuAdmin(admin.ModelAdmin):
     list_display = ('id', 'oshxona', 'name', 'tarkib')
     list_filter = ('id', 'oshxona', 'name')
 
-class PostAdmin(admin.ModelAdmin):
-    list_display = ('kg', 'text', 'image',)
 
 class VerifyAccountCodeAdmin(admin.ModelAdmin):
     list_display = ('email', 'code', 'registered_time', 'verified_time', 'status',)
@@ -41,5 +39,5 @@ admin.site.register(Xodim, XodimAdmin)
 admin.site.register(Image_Video, Image_VideoAdmin)
 admin.site.register(Oshxona)
 admin.site.register(Menu, MenuAdmin)
-admin.site.register(Post, PostAdmin)
+
 admin.site.register(VerifyAccountCode, VerifyAccountCodeAdmin)

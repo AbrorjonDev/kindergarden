@@ -18,7 +18,16 @@ def tadbir_delete(sender, instance, *args, **kwargs):
 def kg_delete(sender, instance, *args, **kwargs):
     if instance.logo:
         _delete_image(instance.logo.path)
-
+    if instance.post_image1:
+        _delete_image(instance.post_image1.path)
+    if instance.post_image2:
+        _delete_image(instance.post_image2.path)
+    if instance.post_image2:
+        _delete_image(instance.post_image2.path)
+    if instance.post_image3:
+        _delete_image(instance.post_image3.path)
+    if instance.post_image4:
+        _delete_image(instance.post_image4.path)
 @receiver(post_delete, sender=Yangilik)
 def yangilik_delete(sender, instance, *args, **kwargs):
     if instance.image:
@@ -57,8 +66,4 @@ def xodim_delete(sender, instance, *args, **kwargs):
     if instance.image:
         _delete_image(instance.image.path)
 
-@receiver(post_delete, sender=Post)
-def post_delete(sender, instance, *args, **kwargs):
-    if instance.image:
-        _delete_image(instance.image.path)
 

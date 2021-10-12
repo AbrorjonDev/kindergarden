@@ -47,15 +47,23 @@ class KG(models.Model):
     instagram = models.URLField(blank=True, null=True)
     facebook = models.URLField(blank=True, null=True)
     email = models.EmailField()
-    logo = models.ImageField(blank=True, null=True )
+    logo = models.ImageField(default="default.jpeg", upload_to="logo",  blank=True, null=True )
     our_history = models.TextField(blank=True, null=True)
     why_us = models.TextField(blank=True, null=True)
     program1 = models.TextField(blank=True, null=True)
     program2 = models.TextField(blank=True, null=True)
     program3 = models.TextField(blank=True, null=True)
+    post_image1 = models.ImageField(blank=True, null=True)
+    post_text1 = models.TextField(blank=True, null=True)
+    post_image2 = models.ImageField(blank=True, null=True)
+    post_text2 = models.TextField(blank=True, null=True)
+    post_image3 = models.ImageField(blank=True, null=True)
+    post_text3 = models.TextField(blank=True, null=True)
+    post_image4 = models.ImageField(blank=True, null=True)
+    post_text4 = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.name or str(self.id)
 
 class Tadbir(models.Model):
     kg = models.ForeignKey(KG, on_delete=models.CASCADE)
@@ -128,15 +136,6 @@ class Xodim(models.Model):
 
     def __str__(self):
         return self.full_name
-
-
-class Post(models.Model):
-    image = models.ImageField()
-    kg = models.ForeignKey(KG, on_delete=models.CASCADE)
-    text = models.TextField()
-
-    def __str__(self):
-        return self.id
 
 class Oshxona(models.Model):
     name = models.CharField(max_length=100)

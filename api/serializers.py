@@ -27,6 +27,7 @@ class TadbirS(serializers.ModelSerializer):
 
 
 class YangilikS(serializers.ModelSerializer):
+    date = serializers.DateField(format="%d-%m-%Y", input_formats=['%d-%m-%Y', 'iso-8601'])
     class Meta:
         model = Yangilik
         fields = "__all__"
@@ -45,10 +46,7 @@ class XodimS(serializers.ModelSerializer):
         model = Xodim
         fields = '__all__'
 
-class PostS(serializers.ModelSerializer):
-    class Meta:
-        model = Post
-        fields = '__all__'
+
 
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:

@@ -86,10 +86,14 @@ class AllDataView(APIView):
                 serializer["program1"] = object.program1
                 serializer["program2"] = object.program2
                 serializer["program3"] = object.program3
-                serializer["post_image1"] = object.post_image1.url
-                serializer["post_image2"] = object.post_image2.url
-                serializer["post_image3"] = object.post_image3.url
-                serializer["post_image4"] = object.post_image4.url
+                if object.post_image1:
+                    serializer["post_image1"] = object.post_image1.url
+                if object.post_image2:
+                    serializer["post_image2"] = object.post_image2.url
+                if object.post_image3:
+                    serializer["post_image3"] = object.post_image3.url
+                if object.post_image4:
+                    serializer["post_image4"] = object.post_image4.url
                 serializer["post_text1"] = object.post_text1
                 serializer["post_text2"] = object.post_text2
                 serializer["post_text3"] = object.post_text3
@@ -155,10 +159,14 @@ class KGINFOView(APIView):
             serializer["program1"] = object.program1
             serializer["program2"] = object.program2
             serializer["program3"] = object.program3
-            serializer["post_image1"] = object.post_image1.url
-            serializer["post_image2"] = object.post_image2.url
-            serializer["post_image3"] = object.post_image3.url
-            serializer["post_image4"] = object.post_image4.url
+            if object.post_image1:
+                serializer["post_image1"] = object.post_image1.url
+            if object.post_image2:
+                serializer["post_image2"] = object.post_image2.url
+            if object.post_image3:
+                serializer["post_image3"] = object.post_image3.url
+            if object.post_image4:
+                serializer["post_image4"] = object.post_image4.url
             serializer["post_text1"] = object.post_text1
             serializer["post_text2"] = object.post_text2
             serializer["post_text3"] = object.post_text3

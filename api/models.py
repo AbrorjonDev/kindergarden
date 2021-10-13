@@ -65,6 +65,12 @@ class KG(models.Model):
     def __str__(self):
         return self.name or str(self.id)
 
+    def ImageURL(self):
+        if self.post_image4:
+            return self.post_image4.url
+        else:
+            return None
+
 class Tadbir(models.Model):
     kg = models.ForeignKey(KG, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)

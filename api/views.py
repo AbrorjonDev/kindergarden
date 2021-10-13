@@ -88,12 +88,20 @@ class AllDataView(APIView):
                 serializer["program3"] = object.program3
                 if object.post_image1:
                     serializer["post_image1"] = object.post_image1.url
+                else:
+                    serializer["post_image1"] = None
                 if object.post_image2:
                     serializer["post_image2"] = object.post_image2.url
+                else:
+                    serializer["post_image2"] = None
                 if object.post_image3:
                     serializer["post_image3"] = object.post_image3.url
+                else:
+                    serializer["post_image3"] = None
                 if object.post_image4:
                     serializer["post_image4"] = object.post_image4.url
+                else:
+                    serializer["post_image4"] = None
                 serializer["post_text1"] = object.post_text1
                 serializer["post_text2"] = object.post_text2
                 serializer["post_text3"] = object.post_text3
@@ -161,12 +169,20 @@ class KGINFOView(APIView):
             serializer["program3"] = object.program3
             if object.post_image1:
                 serializer["post_image1"] = object.post_image1.url
+            else:
+                serializer["post_image1"] = None
             if object.post_image2:
                 serializer["post_image2"] = object.post_image2.url
+            else:
+                serializer["post_image2"] = None
             if object.post_image3:
                 serializer["post_image3"] = object.post_image3.url
+            else:
+                serializer["post_image3"] = None
             if object.post_image4:
                 serializer["post_image4"] = object.post_image4.url
+            else:
+                serializer["post_image4"] = None
             serializer["post_text1"] = object.post_text1
             serializer["post_text2"] = object.post_text2
             serializer["post_text3"] = object.post_text3

@@ -79,6 +79,8 @@ class AllDataView(APIView):
                 serializer["telegram"] = object.telegram
                 if object.logo:
                     serializer["logo"] = object.logo.url
+                else:
+                    serializer["logo"] = None
                 serializer["instagram"] = object.instagram
                 serializer["facebook"] = object.facebook
                 serializer["why_us"] = object.why_us
@@ -188,6 +190,8 @@ class KGINFOView(APIView):
             serializer["post_text3"] = object.post_text3
             serializer["post_text4"] = object.post_text4
             if object.logo:
+                serializer["logo"] = object.logo.url
+            else:
                 serializer["logo"] = object.logo.url
             return Response(serializer, status=200)
         except Exception as e:

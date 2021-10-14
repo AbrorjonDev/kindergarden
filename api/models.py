@@ -103,7 +103,7 @@ class Image_Video(models.Model):
     image6 = models.ImageField()
     image7 = models.ImageField()
     image8 = models.ImageField()
-    video = models.URLField()
+    # video = models.URLField()
 
     def __str__(self):
         return self.kg.name

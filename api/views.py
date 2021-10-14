@@ -57,7 +57,7 @@ class AllDataView(APIView):
                 menu = []
                 for o in oshxona:
                     menu += Menu.objects.filter(oshxona=o)
-                media = Image_Video.objects.filter(kg=object)
+                media = Image_Video.objects.get(kg=object)
                 serializer = {
                     'rahbariyat': RahbariyatS(rahbariyat, many=True).data,
                     'xodim': XodimS(xodim, many=True).data,
@@ -142,7 +142,7 @@ class KGINFOView(APIView):
             menu = []
             for o in oshxona:
                 menu += Menu.objects.filter(oshxona=o)
-            media = Image_Video.objects.filter(kg=object)
+            media = Image_Video.objects.get(kg=object)
             serializer = {
                 'rahbariyat': RahbariyatS(rahbariyat, many=True).data,
                 'xodim': XodimS(xodim, many=True).data,

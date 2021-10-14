@@ -66,7 +66,7 @@ class AllDataView(APIView):
                     # 'post': PostS(post, many=True).data,
                     'oshxona': OshxonaSerializer(oshxona, many=True).data,
                     'menu': MenuSerializer(menu, many=True).data,
-                    'media': ImageVideoSerializer(media, many=True).data,
+                    'media': ImageVideoSerializer(media, many=False).data,
                 }
                 serializer["id"] = object.id
                 serializer["name"] = object.name
@@ -151,7 +151,7 @@ class KGINFOView(APIView):
                 # 'post': PostS(post, many=True).data,
                 'oshxona': OshxonaSerializer(oshxona, many=True).data,
                 'menu': MenuSerializer(menu, many=True).data,
-                'media': ImageVideoSerializer(media, many=True).data,
+                'media': ImageVideoSerializer(media, many=False).data,
             }
             serializer["id"] = object.id
             serializer["name"] = object.name
@@ -389,6 +389,8 @@ class VerifyEmail(APIView):
                     object.save()
                     kg = KG.objects.create(email=object.email)
                     kg.save()
+                    media = Image_Video.objects.create(kg=kg)
+                    media.save()
                 return Response({'detail': 'Akkount tasdiqdan o\'tdi.', }, status=201)
             except Exception as e:
                 raise e

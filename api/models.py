@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
-
+from django.contrib.postgres.fields import ArrayField
 # User._meta.get_field('username')._unique = False
 User._meta.get_field('username').blank = True
 User._meta.get_field('username').null = False
@@ -37,10 +37,14 @@ VILOYATLAR = (
 #
 
 class KG(models.Model):
-    viloyat = models.CharField(blank=True, null=True, choices=VILOYATLAR, max_length=40)
+    viloyat = models.CharField(blank=True, null=True,max_length=40)# choices=VILOYATLAR,
     tuman = models.CharField(blank=True, null=True, max_length=50)
     name = models.CharField(blank=True, null=True, max_length=1000)
     number = models.CharField(blank=True, null=True, max_length=20)
+    params = ArrayField(
+        models.DecimalField(max_digits=9, decimal_places=6),
+        size=2, null=True
+    )
     address = models.CharField(blank=True, null=True, max_length=500)
     phone = models.CharField(blank=True, null=True, max_length=50)
     telegram = models.URLField(blank=True, null=True)

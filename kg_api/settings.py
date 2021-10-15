@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 #import django_heroku
 import os
 # from dotenv import load_dotenv
@@ -136,9 +137,17 @@ DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'kindergarden',
+        # 'PORT': 5432,
+        # 'HOST': '62.209.129.3',
+        # 'USER': 'admin',
+        # 'PASSWORD': 'testing321',
     }
 }
 
+DATABASES['default']= dj_database_url.parse("postgres://admin:testing321@62.209.129.3:5432/kindergarden")
+print(DATABASES['default'])
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

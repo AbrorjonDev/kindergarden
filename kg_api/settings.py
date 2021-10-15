@@ -147,7 +147,7 @@ DATABASES = {
 }
 
 DATABASES['default']= dj_database_url.parse("postgres://admin:testing321@62.209.129.3:5432/kindergarden")
-print(DATABASES['default'])
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

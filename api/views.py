@@ -76,6 +76,7 @@ class AllDataView(APIView):
                 serializer["number"] = object.number
                 serializer["address"] = object.address
                 serializer["phone"] = object.phone
+                serializer["params"] = object.params
                 serializer["telegram"] = object.telegram
                 if object.logo:
                     serializer["logo"] = object.logo.url
@@ -86,6 +87,18 @@ class AllDataView(APIView):
                 serializer["why_us"] = object.why_us
                 serializer["our_history"] = object.our_history
                 serializer["program1"] = object.program1
+                if object.program1_img:
+                    serializer["program1_img"] = object.program1_img
+                else:
+                    serializer["program1_img"] = None
+                if object.program2_img:
+                    serializer["program2_img"] = object.program2_img
+                else:
+                    serializer["program2_img"] = None
+                if object.program3_img:
+                    serializer["program3_img"] = object.program3_img
+                else:
+                    serializer["program3_img"] = None
                 serializer["program2"] = object.program2
                 serializer["program3"] = object.program3
                 if object.post_image1:
@@ -161,6 +174,7 @@ class KGINFOView(APIView):
             serializer["number"] = object.number
             serializer["address"] = object.address
             serializer["phone"] = object.phone
+            serializer["params"] = object.params
             serializer["telegram"] = object.telegram
             serializer["instagram"] = object.instagram
             serializer["facebook"] = object.facebook
@@ -169,6 +183,18 @@ class KGINFOView(APIView):
             serializer["program1"] = object.program1
             serializer["program2"] = object.program2
             serializer["program3"] = object.program3
+            if object.program1_img:
+                serializer["program1_img"] = object.program1_img
+            else:
+                serializer["program1_img"] = None
+            if object.program2_img:
+                serializer["program2_img"] = object.program2_img
+            else:
+                serializer["program2_img"] = None
+            if object.program3_img:
+                serializer["program3_img"] = object.program3_img
+            else:
+                serializer["program3_img"] = None
             if object.post_image1:
                 serializer["post_image1"] = object.post_image1.url
             else:

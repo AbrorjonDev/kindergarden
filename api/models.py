@@ -42,7 +42,7 @@ class KG(models.Model):
     name = models.CharField(blank=True, null=True, max_length=1000)
     number = models.CharField(blank=True, null=True, max_length=20)
     params = ArrayField(
-        models.DecimalField(null=True, blank=True, max_digits=19, decimal_places=15),
+        models.CharField(null=True, blank=True, max_length=50),
         size=2, null=True
     )
     address = models.CharField(blank=True, null=True, max_length=500)
@@ -55,11 +55,11 @@ class KG(models.Model):
     our_history = models.TextField(blank=True, null=True)
     why_us = models.TextField(blank=True, null=True)
     program1 = models.TextField(blank=True, null=True)
-    program1_img = models.ImageField(blank=True, null=True, default="default.jpeg", upload_to="program_images")
+    program1_img = models.ImageField(blank=True, null=True, upload_to="program_images")
     program2 = models.TextField(blank=True, null=True)
-    program2_img = models.ImageField(blank=True, null=True, default="default.jpeg", upload_to="program_images")
+    program2_img = models.ImageField(blank=True, null=True, upload_to="program_images")
     program3 = models.TextField(blank=True, null=True)
-    program3_img = models.ImageField(blank=True, null=True, default="default.jpeg", upload_to="program_images")
+    program3_img = models.ImageField(blank=True, null=True, upload_to="program_images")
     post_image1 = models.ImageField(blank=True, null=True)
     post_text1 = models.TextField(blank=True, null=True)
     post_image2 = models.ImageField(blank=True, null=True)

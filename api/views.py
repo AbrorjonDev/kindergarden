@@ -454,6 +454,7 @@ def get_random_password():
 
 class VerifyEmailView(generics.GenericAPIView):
     serializer_class = EmailSerializer
+    permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
         try:
@@ -492,6 +493,7 @@ class VerifyEmailView(generics.GenericAPIView):
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
+    permission_classes = (AllowAny,)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

@@ -422,17 +422,6 @@ class VerifyEmail(APIView):
                 raise e
         return Response(serializer.errors, status=400)
 
-# class RegistrationView(APIView):
-#     serializer_class = RegistrationSerializer
-#
-#     def post(self, request, *args, **kwargs):
-#         serializer = self.serializer_class(data=request.data)
-#         if serializer.is_valid(raise_exception=True):
-#             username = serializer.validated_data.get('username')
-#             password = serializer.validated_data.get('password')
-#             user = serializer.save()
-#             return Response(serializer.data, status=201)
-#         return Response(serializer.errors)
 
 from rest_framework import generics
 from django.core.mail import EmailMessage
@@ -479,8 +468,9 @@ class VerifyEmailView(generics.GenericAPIView):
                         self.send_gmail(email, password)
                         return Response({"detail": _("ok"), }, status=status.HTTP_200_OK)
                     except Exception as e:
-                        print('error: ', e)
-                        return Response({"detail": _("unauthorized"), }, status=status.HTTP_401_UNAUTHORIZED)
+                        # print('error: ', e)
+                        # return Response({"detail": _("unauthorized"), }, status=status.HTTP_401_UNAUTHORIZED)
+                        raise e
                 else:
                     return Response({"detail": _("not found"), }, status=status.HTTP_404_NOT_FOUND)
 

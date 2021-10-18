@@ -7,7 +7,7 @@ User._meta.get_field('username').blank = True
 User._meta.get_field('username').null = False
 
 
-User._meta.get_field('email')._unique = True
+User._meta.get_field('email')._unique = False
 User._meta.get_field('email').blank = False
 User._meta.get_field('email').null = False
 # User._meta.get_field('username')._unique = False
@@ -179,6 +179,17 @@ def generate_activation_code():
         return int(code)
     else:
         return generate_activation_code()
+
+def generate_password():
+    password = ''
+    list = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890!@#$%^&*()_+='
+    for i in range(0, 9):
+        password += str(random.random(list))
+    if len(password) == 6:
+        print(password)
+        return password
+    else:
+        return generate_password()
 
 class VerifyAccountCode(models.Model):
     email = models.EmailField(max_length=120)

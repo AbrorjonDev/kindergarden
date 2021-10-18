@@ -420,6 +420,84 @@ class VerifyEmail(APIView):
                 return Response({'detail': 'Akkount tasdiqdan o\'tdi.', }, status=201)
             except Exception as e:
                 raise e
-        return Response(serializer  .errors, status=400)
+        return Response(serializer.errors, status=400)
 
+# class RegistrationView(APIView):
+#     serializer_class = RegistrationSerializer
+#
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data)
+#         if serializer.is_valid(raise_exception=True):
+#             username = serializer.validated_data.get('username')
+#             password = serializer.validated_data.get('password')
+#             user = serializer.save()
+#             return Response(serializer.data, status=201)
+#         return Response(serializer.errors)
 
+from rest_framework import generics
+from django.core.mail import EmailMessage
+import random
+def get_random_password():
+    l=10
+    password = ''
+    while(l>0):
+        p1 = random.choice(list('abcdefghijklmnopqrstuvwxyz'))
+        p2 = random.choice(list('ABCDEFGHIJKLMNOPQRSTUVWXYZ'))
+        p3 = random.choice(list('0123456789'))
+        password += random.choice([p1,p2,p3])
+        l -= 1
+    password_list = list(password)
+    # shuffle all characters
+    random.SystemRandom().shuffle(password_list)
+    password = ''.join(password_list)
+    return password
+
+class VerifyEmailView(generics.GenericAPIView):
+    serializer_class = EmailSerializer
+
+    def post(self, request, *args, **kwargs):
+        try:
+            serializer = self.serializer_class(data=request.data)
+
+            if serializer.is_valid(raise_exception=True):
+                email = serializer.validated_data.get('email')
+                id = serializer.validated_data.get('id')
+                # email = serializer.validated_data.get('email')
+
+                if email:
+                    print(email)
+                    try:
+                        # id = self.validated_data.get('id')
+                        user = User.objects.get(id=id)
+                        user.email = email
+                        password = get_random_password()
+                        user.set_password(password)
+                        user.save()
+                        kg, created = KG.objects.get_or_create(email=email)
+                        media, created = Image_Video.objects.get_or_create(kg=kg)
+                        self.send_gmail(email, password)
+                        return Response({"detail": _("ok"), }, status=status.HTTP_200_OK)
+                    except Exception as e:
+                        print('error: ', e)
+                        return Response({"detail": _("unauthorized"), }, status=status.HTTP_401_UNAUTHORIZED)
+                else:
+                    return Response({"detail": _("not found"), }, status=status.HTTP_404_NOT_FOUND)
+
+        except:
+            return Response({"detail": " not found",}, status.HTTP_404_NOT_FOUND)
+    def send_gmail(self, email, password):
+        message = f'Sizning yangi parolingiz - {password}'
+        email = EmailMessage('Sizning yangi parolingiz.', message, to=[email])
+        email.send()
+
+class RegisterAPI(generics.GenericAPIView):
+    serializer_class = RegisterSerializer
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        data = serializer.validated_data
+
+        return Response({
+        "user": UserSerializer(user, context=self.get_serializer_context()).data,
+        })

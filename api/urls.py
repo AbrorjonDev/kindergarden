@@ -25,8 +25,10 @@ urlpatterns = [
     path('media-upload/',MediaCV.as_view(), name="media-upload-api"),
     path('media-upload/<int:pk>/', MediaUV.as_view(), name="media-upload-update-api"),
     path('menu-by-kg/<int:pk>/', MenuByKGView.as_view()),
-    path('register/', RegisterView.as_view(), name="registration-api"),
-    path('verify-email/', VerifyEmail.as_view(), name="verify-email-api"),
+    path('register/', RegisterView.as_view(), name="register-api"),
+    # path('verify-email/', VerifyEmail.as_view(), name="verify-email-api"),
     path('password-reset/', CustomPasswordResetView.as_view(), name="password-reset-api"),
+    path('registration/', RegisterAPI.as_view(), name="registration-api"),
+    path('verify-email/', VerifyEmailView.as_view(), name="verify-email-api"),
 
 ]

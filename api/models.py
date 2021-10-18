@@ -51,7 +51,7 @@ class KG(models.Model):
     instagram = models.URLField(blank=True, null=True)
     facebook = models.URLField(blank=True, null=True)
     email = models.EmailField()
-    logo = models.ImageField(default="default.jpeg", upload_to="logo",  blank=True, null=True )
+    logo = models.ImageField(upload_to="logo", blank=True, null=True )
     our_history = models.TextField(blank=True, null=True)
     why_us = models.TextField(blank=True, null=True)
     program1 = models.TextField(blank=True, null=True)

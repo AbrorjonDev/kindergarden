@@ -70,7 +70,7 @@ class KG(models.Model):
     post_text4 = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.name or str(self.id)
+        return str(self.id)
 
     def ImageURL(self):
         if self.post_image4:

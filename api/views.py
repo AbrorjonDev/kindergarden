@@ -445,6 +445,11 @@ class VerifyEmailView(generics.GenericAPIView):
     serializer_class = EmailSerializer
     permission_classes = (AllowAny,)
 
+    def send_gmail(self, email, password):
+        message = f'Sizning yangi parolingiz - {password}'
+        email = EmailMessage('Sizning yangi parolingiz.', message, to=[email])
+        email.send()
+
     def post(self, request, *args, **kwargs):
         try:
             serializer = self.serializer_class(data=request.data)
@@ -476,10 +481,7 @@ class VerifyEmailView(generics.GenericAPIView):
 
         except:
             return Response({"detail": " not found",}, status.HTTP_404_NOT_FOUND)
-    def send_gmail(self, email, password):
-        message = f'Sizning yangi parolingiz - {password}'
-        email = EmailMessage('Sizning yangi parolingiz.', message, to=[email])
-        email.send()
+
 
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer

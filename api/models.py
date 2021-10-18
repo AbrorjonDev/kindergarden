@@ -70,7 +70,7 @@ class KG(models.Model):
     post_text4 = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return str(self.id)
+        return '{0}'.format(self.email)
 
     def ImageURL(self):
         if self.post_image4:
@@ -113,7 +113,7 @@ class Image_Video(models.Model):
     # video = models.URLField()
 
     def __str__(self):
-        return self.kg.name
+        return self.kg.email
 
 
 

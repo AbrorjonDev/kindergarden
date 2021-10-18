@@ -53,8 +53,8 @@ def tadbir_delete(sender, instance, *args, **kwargs):
         _delete_image(instance.image7.path)
     if instance.image8:
         _delete_image(instance.image8.path)
-    if instance.video:
-        _delete_image(instance.video.path)
+    # if instance.video:
+    #     _delete_image(instance.video.path)
 
 @receiver(post_delete, sender=Rahbariyat)
 def rahbariyat_delete(sender, instance, *args, **kwargs):

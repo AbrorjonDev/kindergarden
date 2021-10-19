@@ -3,13 +3,13 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 # User._meta.get_field('username')._unique = False
-User._meta.get_field('username').blank = True
-User._meta.get_field('username').null = False
-
-
-User._meta.get_field('email')._unique = False
-User._meta.get_field('email').blank = False
-User._meta.get_field('email').null = False
+# User._meta.get_field('username').blank = True
+# User._meta.get_field('username').null = False
+#
+#
+# User._meta.get_field('email')._unique = False
+# User._meta.get_field('email').blank = False
+# User._meta.get_field('email').null = False
 # User._meta.get_field('username')._unique = False
 # User._meta.get_field('email')._unique = True
 # User._meta.get_field('email').blank = False

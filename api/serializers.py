@@ -164,7 +164,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username')
 class EmailSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    id = serializers.IntegerField()
+    key = serializers.CharField()
 
 
 class RegisterSerializer(serializers.ModelSerializer):

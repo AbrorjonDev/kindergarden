@@ -456,14 +456,15 @@ class VerifyEmailView(generics.GenericAPIView):
 
             if serializer.is_valid(raise_exception=True):
                 email = serializer.validated_data.get('email')
-                id = serializer.validated_data.get('id')
+                key = serializer.validated_data.get('key')
                 # email = serializer.validated_data.get('email')
 
                 if email:
                     print(email)
                     try:
                         # id = self.validated_data.get('id')
-                        user = User.objects.get(id=id)
+                        # user = User.objects.get(id=id)
+                        user = Token.objects.get(key=key).user
                         user.email = email
                         password = get_random_password()
                         user.set_password(password)

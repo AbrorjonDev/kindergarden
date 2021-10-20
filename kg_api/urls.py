@@ -37,7 +37,7 @@ def api_root(request, format=None):
         "tadbirlar": "https://bogcha.herokuapp.com/tadbirlar/",
         "yangilik": "https://bogcha.herokuapp.com/yangilik/",
         "xodim": "https://bogcha.herokuapp.com/xodim/",
-        "post": "https://bogcha.herokuapp.com/post/",
+        # "post": "https://bogcha.herokuapp.com/post/",
         "kitchen": "https://bogcha.herokuapp.com/kitchen/",
         "menu": "https://bogcha.herokuapp.com/menu/",
         "all-data": "https://bogcha.herokuapp.com/all-data/",

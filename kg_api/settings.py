@@ -102,7 +102,7 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://bogcha.herokuapp.com/','localhost:3000',]
+CSRF_TRUSTED_ORIGINS = ['bogcha.herokuapp.com', 'https://bogcha.herokuapp.com/','localhost:3000',]
 
 CORS_REPLACE_HTTPS_REFERER = True
 
@@ -206,7 +206,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 PASSWORD_RESET_SERIALIZER = 'api.serializers.CustomPasswordResetSerializer'
-OLD_PASSWORD_FIELD_ENABLED = True
+OLD_PASSWORD_FIELD_ENABLED = False
 LOGOUT_ON_PASSWORD_CHANGE = False
 
 # Static files (CSS, JavaScript, Images)

@@ -98,8 +98,6 @@ class CustomPasswordResetSerializer(PasswordSerializer):
             'request': request,
             ###### USE YOUR TEXT FILE ######
             'email_template_name': 'password_reset_email.html',
-
-
         }
         self.reset_form.save(**opts)
 from django.contrib.auth.forms import SetPasswordForm
@@ -152,7 +150,7 @@ class PasswordResetSerializer(serializers.Serializer):      #serializers.Seriali
 
 
 class EmailS(serializers.Serializer):
-    key = serializers.CharField(max_length=150)
+    email = serializers.EmailField(max_length=150)
 
 class VerificationCodeS(serializers.Serializer):
     email = serializers.EmailField()
@@ -176,3 +174,88 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(validated_data['username'], "example@gmail.com", validated_data['password'])
         return user
+
+def comparision(new_password1, new_password2):
+    if new_password1 == new_password2:
+        return True
+    return False
+from rest_framework.authtoken.models import Token
+class PasswordResetS(serializers.Serializer):
+    email = serializers.EmailField()
+    code = serializers.CharField(max_length=8)
+    new_password1 = serializers.CharField(max_length=128)
+    new_password2 = serializers.CharField(max_length=128)
+    extra_kwargs = {
+        "new_password1":{
+            "write_only":True,
+        },
+        "new_password2":{
+            "write_only":True,
+        }
+    }
+
+    def save(self, attrs):
+        try:
+            code_obj = VerifyAccountCode.objects.filter(email=attrs["email"]).last()
+            code = code_obj.code
+            if code == attrs["code"]:
+                if attrs["new_password1"] is not None and attrs["new_password1"] is not None:
+                    if comparision(new_password1=attrs["new_password1"], new_password2=attrs["new_password2"]):
+                        user = User.objects.get(email=attrs["email"])
+                        user.set_password(attrs["new_password1"])
+                        user.save()
+                        code_obj.delete()
+                    else:
+                        return ValidationError({'detail':['Parol va Parolni tasdiqlash noto\'g\'ri kiritildi.']})
+                return ValidationError({"detail": ["Parol maydoni bo\'sh."]})
+            else:
+                return ValidationError({"detail":["Tasdiqlash kodi noto'g'ri kiritildi."]})
+
+        except Exception as e:
+            raise e
+
+    # def validation(self, uid=None, token=None, new_password1=None):# uid, token,
+    #
+    #     print("uid: {0} ; token: {1}".format(uid, token))
+    #     if 'allauth' in settings.INSTALLED_APPS:
+    #         from allauth.account.forms import default_token_generator
+    #         from allauth.account.utils import url_str_to_user_pk as uid_decoder
+    #     else:
+    #         from django.contrib.auth.tokens import default_token_generator
+    #         from django.utils.http import urlsafe_base64_decode as uid_decoder
+    #         uid1 = force_str(uid_decoder(uid))
+    #
+    #     # Decode the uidb64 (allauth use base36) to uid to get User object
+    #     try:
+    #         uid1 = force_str(uid_decoder(uid))
+    #         print(uid1)
+    #         self.user = UserModel._default_manager.get(pk=int(uid1))
+    #     # except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
+    #     #     raise ValidationError({'uid': ['Invalid value']})
+    #     except Exception as e:
+    #         print('Exception: ', uid)
+    #         raise e
+    #     # if not default_token_generator.check_token(self.user, token):
+    #     if self.user is not Token.objects.get(key=token).user:
+    #         raise ValidationError({'token': ['Invalid value']})
+    #
+    #     try:
+    #         if new_password1 is not None:
+    #             self.user.set_password(password=new_password1)
+    #         else:
+    #             print("parol bo\'sh")
+    #     except Exception as e:
+    #         raise e
+    #
+    #     return self.user
+    #
+    #     # self.custom_validation(attrs)
+    #     # # Construct SetPasswordForm instance
+    #     # self.set_password_form = self.set_password_form_class(
+    #     #     user=self.user, data=attrs,
+    #     # )
+    #     # if not self.set_password_form.is_valid():
+    #     #     raise serializers.ValidationError(self.set_password_form.errors)
+    #     #
+    #     # return attrs
+    #

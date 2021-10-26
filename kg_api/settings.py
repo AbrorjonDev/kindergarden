@@ -102,7 +102,7 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 
-CSRF_TRUSTED_ORIGINS = ['bogcha.herokuapp.com', 'https://bogcha.herokuapp.com/','localhost:3000',]
+CSRF_TRUSTED_ORIGINS = ['bogcha.herokuapp.com', 'https://bogcha.herokuapp.com/','localhost:3000','127.0.0.1',]
 
 CORS_REPLACE_HTTPS_REFERER = True
 

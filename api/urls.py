@@ -28,6 +28,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name="register-api"),
     # path('verify-email/', VerifyEmail.as_view(), name="verify-email-api"),
     path('password-reset/', CustomPasswordResetView.as_view(), name="password-reset-api"),
+    path('password-reset/confirm/', CustomPasswordResetConfirmView.as_view(), name="password-reset-api"),
     path('registration/', RegisterAPI.as_view(), name="registration-api"),
     path('verify-email/', VerifyEmailView.as_view(), name="verify-email-api"),
 

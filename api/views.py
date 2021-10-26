@@ -14,9 +14,63 @@ from dj_rest_auth.registration.views import APIView, ConfirmEmailView, AllowAny,
 
 from dj_rest_auth.views import PasswordResetView
 
-class CustomPasswordResetView(PasswordResetView):
-    pass
-#
+# class CustomPasswordResetView(PasswordResetView):
+#     pass
+class CustomPasswordResetView(APIView):
+    serializer_class = EmailS
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            email = serializer.validated_data.get("email")
+            try:
+                user = User.objects.get(email=email)
+                code = VerifyAccountCode.objects.create(email=email, code=generate_activation_code())
+                message = f'''
+                    Assalomu alaykum, {email}.
+                    Kimdir sizning nomingizdan parolni qayta o'rnatish so'rovini jo'natdi.
+                    Agar bu siz bo'lmasangiz, bu xabarni e'tiborsiz qoldiring.
+                                                  ----------
+                    Sizning tasdiqlash kodingiz :| {code.code} .|
+                                                  ----------
+                    Sizning saytdagi nomingiz {user.username}.
+                    Iltimos, bu kodni hech kimga bermang.
+                '''
+                send_mail(
+                    "Kirish parolini o'zgartirish kodi: ",
+                    message,
+                    settings.EMAIL_HOST_USER,
+                    [email],
+                    fail_silently=False,
+                )
+            except Exception as e:
+                raise e
+        return Response({"detail": "Agar elektron pochta manzilini to\'g\'ri kiritgan bo\'lsangiz, unga tasdiqlash kodi yuborildi. "})
+
+class CustomPasswordResetConfirmView(APIView):
+
+    serializer_class = PasswordResetS
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(serializer.data)
+            return Response({"detail":"Parol muvaffaqiyatli almashtirildi."}, status=201)
+        return Response(serializer.errors, status=400)
+
+
+    # def post(self, request, *args, **kwargs):
+    #     serializer = self.serializer_class(data=request.data)
+    #     if serializer.is_valid(raise_exception=True):
+    #         new_password1 = serializer.validated_data.get('new_password1')
+    #         # uid = request.path.split('/')[-2]
+    #         # token = request.path.split('/')[-1]
+    #         uid = kwargs["uidb64"]
+    #         token = kwargs["token"]
+    #
+    #         self.serializer_class.validation(self, uid=uid, token=token, new_password1=new_password1)
+    #         return Response({'detail': 'parol muvaffaqiyatli almashtirildi.',})
+    #     return Response({'detail': 'Xatolik sodir bo\'ldi'})
+# #
 # class TumanCV(ListCreateAPIView):
 #     queryset = Tuman.objects.all()
 #     serializer_class = TumanS
@@ -229,6 +283,7 @@ class KGINFOView(APIView):
 class KGUV(RetrieveUpdateDestroyAPIView):
     queryset = KG.objects.all()
     serializer_class = KGS
+    allowed_methods = ['HEAD', 'DELETE', 'PATCH']
 
 
 class TadbirCV(ListCreateAPIView):
@@ -339,7 +394,7 @@ class PasswordResetConfirmAPIView(PasswordResetConfirmView):
         path = request.path
         uid = path.split('/')[-3]
         uid = force_str(uid_decoder(uid))
-        user = User.objects.get(pk=uid)
+        user = User.objects.get(pk=int(float(uid)))
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             if request.data["new_password1"] == request.data["new_password2"]:

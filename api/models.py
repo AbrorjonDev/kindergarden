@@ -174,7 +174,7 @@ def generate_activation_code():
     code = ''
     for i in range(0, 6):
         code += str(random.randint(0, 10))
-    if len(code) == 6:
+    if len(code) <= 6:
         print(code)
         return int(code)
     else:

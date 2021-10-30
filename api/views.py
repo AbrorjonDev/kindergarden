@@ -87,7 +87,7 @@ class KGCV(ListCreateAPIView):
 
 class AllDataView(APIView):
     queryset = KG.objects.all()
-    serializer_class = EmailS
+    serializer_class = KeySerializer
 
     def get_object(self, key):
         try:
@@ -97,7 +97,7 @@ class AllDataView(APIView):
             raise e
 
     def post(self, request, format=None):
-        serializer = EmailS(data=request.data)
+        serializer = KeySerializer(data=request.data)
         if serializer.is_valid():
             try:
                 token = serializer.validated_data.get('key')

@@ -9,6 +9,9 @@ from rest_framework.response import Response
 #         fields = '__all__'
 
 
+class KeySerializer(serializers.Serializer):
+    key = serializers.CharField(max_length=200)
+
 class KGS(serializers.ModelSerializer):
     class Meta:
         model = KG
